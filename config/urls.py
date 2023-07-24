@@ -1,5 +1,5 @@
 """
-URL configuration for configs project.
+URL configuration for config project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.2/topics/http/urls/
@@ -16,12 +16,9 @@ Including another URLconf
 """
 
 from django.urls import path
-# from cars.views import TestOneView, TestTwoView
-from cars.views import CarListCreateView, CarRetrieveDestroyView
+from cars.views import CarListCreateView, CarRetrieveUpdateDestroyView
 
 urlpatterns = [
-    # path('test_one', TestOneView.as_view()),
-    # path('test_one/<int:pk>', TestTwoView.as_view()),
     path('cars', CarListCreateView.as_view()),
-    path('cars/<int:pk>', CarRetrieveDestroyView.as_view()),
+    path('cars/<int:pk>', CarRetrieveUpdateDestroyView.as_view()),
 ]
