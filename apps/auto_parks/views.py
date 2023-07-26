@@ -1,36 +1,33 @@
 from django.http import Http404
 from rest_framework import status
-from rest_framework.generics import GenericAPIView
+from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.mixins import ListModelMixin, CreateModelMixin
+
 from .models import AutoParkModel
 from .serializers import AutoParkSerializer
 from apps.cars.serializers import CarSerializer
 from apps.cars.models import CarModel
 
 
-# class AutoParkListCreateView(GenericAPIView):
-#     def get(self, *args, **kwargs):
-#         qs = AutoParkModel.objects.all()
-#         serializer = AutoParkSerializer(qs, many=True)
-#         return Response(serializer.data, status.HTTP_200_OK)
+# class AutoParkListCreateView(GenericAPIView, ListModelMixin, CreateModelMixin):
+#     serializer_class = AutoParkSerializer
+#     queryset = AutoParkModel.objects.all()
 #
-#     def post(self, *args, **kwargs):
-#         data = self.request.data
-#         serializer = AutoParkSerializer(data=data)
-#         serializer.is_valid(raise_exception=True)
-#         serializer.save()
-#         return Response(serializer.data, status.HTTP_201_CREATED)
+#     def get(self, request, *args, **kwargs):
+#         return super().list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return super().create(request, *args, **kwargs)
 
-class AutoParkListCreateView(GenericAPIView, ListModelMixin, CreateModelMixin):
+class AutoParkListCreateView(ListCreateAPIView):
     serializer_class = AutoParkSerializer
     queryset = AutoParkModel.objects.all()
 
-    def get(self, request, *args, **kwargs):
-        return super().list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return super().create(request, *args, **kwargs)
+class AutoParkRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    serializer_class = AutoParkSerializer
+    queryset = AutoParkModel.objects.all()
 
 
 class AutoParkCarListCreateView(GenericAPIView):
@@ -52,7 +49,7 @@ class AutoParkCarListCreateView(GenericAPIView):
         data = self.request.data
         serializer = CarSerializer(data=data)
         serializer.is_valid(raise_exception=True)
-        # auto_park = self.get_object() # повертає весь обєкт auto_park. Сильно навантажує БД!!!
+
         exists = AutoParkModel.objects.filter(pk=pk).exists()
 
         if not exists:
