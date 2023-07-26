@@ -63,6 +63,7 @@ from apps.cars.models import CarModel
 #         return super().list(request, *args, **kwargs)
 
 class CarListView(ListAPIView):
+    serializer_class = CarSerializer
 
     def get_queryset(self):
         return car_filter_queryset(self.request.query_params)
