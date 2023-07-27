@@ -1,5 +1,6 @@
 from django.db.models import QuerySet
 from django.http import QueryDict
+
 from rest_framework.serializers import ValidationError
 
 from apps.cars.models import CarModel
@@ -7,7 +8,9 @@ from apps.cars.models import CarModel
 
 def car_filter_queryset(query: QueryDict) -> QuerySet:
     qs = CarModel.objects.all()
-
+    query = query.dict()
+    query.pop('page', None)
+    query.pop('size', None)
     for k, v in query.items():
         match k:
             case 'price_gt':

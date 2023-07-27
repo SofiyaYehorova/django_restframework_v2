@@ -9,6 +9,7 @@ mysqlclient = "*"
 
 [dev-packages]
 isort = "*"
+django-dotenv = "*"
 
 [requires]
 python_version = "3.11"

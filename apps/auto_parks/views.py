@@ -1,22 +1,35 @@
 from django.http import Http404
+
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
+from apps.cars.models import CarModel
+from apps.cars.serializers import CarSerializer
+
 from .models import AutoParkModel
 from .serializers import AutoParkSerializer
-from apps.cars.serializers import CarSerializer
-from apps.cars.models import CarModel
 
 
 class AutoParkListCreateView(ListCreateAPIView):
     serializer_class = AutoParkSerializer
-    queryset = AutoParkModel.objects.all()
+    # queryset = AutoParkModel.objects.all()
+    queryset = AutoParkModel.objects.prefetch_related('cars')
+    pagination_class = None
 
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     return queryset
+    #
+    # def get(self, request, *args, **kwargs):
+    #     self.get_queryset()
+    #     return Response('ok')
 
 class AutoParkRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     serializer_class = AutoParkSerializer
     queryset = AutoParkModel.objects.all()
+
+
 
 
 class AutoParkCarListCreateView(GenericAPIView):
