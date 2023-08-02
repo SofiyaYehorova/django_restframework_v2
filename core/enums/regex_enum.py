@@ -11,7 +11,7 @@ class RegExEnum(Enum):
         [
             'min 1 lowercase',
             'min 1 uppercase',
-            'min 1 digit',
+            'min 2 digits',
             'min 1 special character',
             'length 8-30 characters'
         ]
