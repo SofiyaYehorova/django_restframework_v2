@@ -1,7 +1,6 @@
 from django_filters import rest_framework as filters
 
 from .choices.bode_type_choices import BodyTypeChoices
-from .models import CarModel
 
 
 class CarFilter(filters.FilterSet):
@@ -19,10 +18,3 @@ class CarFilter(filters.FilterSet):
             'price',
         )
     )
-    # class Meta:
-    #     model = CarModel
-    #     fields = ('brand', 'id', 'year',)
-        # fields = {
-        #     'brand': ('istartswith', 'icontains'),
-        #     'year': ('lte', 'lt', 'gte', 'gt'),
-        # }

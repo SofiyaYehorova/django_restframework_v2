@@ -13,14 +13,6 @@ class CarQuerySet(models.QuerySet):
 
 
 class CarManager(models.Manager):
-    # def get_cars_by_auto_park_id(self, pk):
-    #     return self.filter(auto_park_id=pk)
-
-    # def get_only_jeep(self):
-    # return self.filter(brand='Jeep')
-
-    # def year_less(self, year):
-    #     return self.filter(year__lt=year)
 
     def get_queryset(self):
         return CarQuerySet(self.model)

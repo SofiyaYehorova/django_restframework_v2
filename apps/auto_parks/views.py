@@ -14,25 +14,14 @@ from .serializers import AutoParkSerializer
 
 class AutoParkListCreateView(ListCreateAPIView):
     serializer_class = AutoParkSerializer
-    # queryset = AutoParkModel.objects.all()
-    # queryset = AutoParkModel.objects.prefetch_related('cars')
     queryset = AutoParkModel.objects.all_with_cars()
     pagination_class = None
-    # permission_classes = (IsAdminUser,)
 
     def get_permissions(self):
         if self.request.method == 'GET':
             return (AllowAny(),)
 
         return (IsAdminUser(),)
-
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     return queryset
-    #
-    # def get(self, request, *args, **kwargs):
-    #     self.get_queryset()
-    #     return Response('ok')
 
 
 class AutoParkRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
